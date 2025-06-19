@@ -1,6 +1,6 @@
 # Codex-2
 
-This repository contains a simple Python script to display urgent Bitcoin news from various RSS feeds.
+This repository now contains a small Flask application that displays crypto news from several RSS feeds. The app offers a home page, about page, contact page and a news page where you can filter by crypto category and news source.
 
 ## Usage
 
@@ -10,20 +10,16 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-Run the script:
+Run the web app:
 
 ```bash
-python bitcoin_news.py
+python app.py
 ```
 
-If a feed cannot be retrieved (for example due to network restrictions), the
-script prints a warning and continues.
+Then open `http://localhost:5000` in your browser. If a feed cannot be retrieved (for example due to network restrictions), the app prints a warning and continues.
 
-You can specify custom feeds or limit the number of headlines shown:
+You can still run the original command-line script to fetch Bitcoin headlines:
 
 ```bash
-python bitcoin_news.py --feeds <feed1> <feed2> --limit 5
+python bitcoin_news.py --limit 5
 ```
-
-
-
