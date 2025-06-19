@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Latest Crypto News</h1>
+<ul>
+{% for entry in news %}
+    <li>
+        <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+        <small>({{ entry.published }})</small>
+    </li>
+{% else %}
+    <li>No news available.</li>
+{% endfor %}
+</ul>
+{% endblock %}

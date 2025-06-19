@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>News</h1>
+<form method="get" action="{{ url_for('news') }}">
+    <label for="category">Category:</label>
+    <select name="category" id="category">
+    {% for cat in categories %}
+        <option value="{{ cat }}" {% if selected_category == cat %}selected{% endif %}>{{ cat }}</option>
+    {% endfor %}
+    </select>
+    <label for="source">Source:</label>
+    <select name="source" id="source">
+    {% for src in sources %}
+        <option value="{{ src }}" {% if selected_source == src %}selected{% endif %}>{{ src }}</option>
+    {% endfor %}
+    </select>
+    <button type="submit">Filter</button>
+</form>
+<ul>
+{% for entry in news %}
+    <li>
+        <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+        <small>({{ entry.published }})</small>
+    </li>
+{% else %}
+    <li>No news available.</li>
+{% endfor %}
+</ul>
+{% endblock %}
