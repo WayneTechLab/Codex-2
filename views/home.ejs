@@ -1,0 +1,15 @@
+<% layout('base') %>
+<h1>Latest Crypto News</h1>
+<ul>
+<% if (news && news.length) { %>
+  <% news.forEach(function(entry) { %>
+    <li>
+      <a href="<%= entry.link %>" target="_blank"><%= entry.title %></a>
+      <small>(<%= entry.published %>)</small>
+    </li>
+  <% }); %>
+<% } else { %>
+  <li>No news available.</li>
+<% } %>
+</ul>
+

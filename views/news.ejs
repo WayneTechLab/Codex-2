@@ -1,0 +1,30 @@
+<% layout('base') %>
+<h1>News</h1>
+<form method="get" action="/news">
+    <label for="category">Category:</label>
+    <select name="category" id="category">
+    <% categories.forEach(function(cat) { %>
+        <option value="<%= cat %>" <% if (selected_category === cat) { %>selected<% } %>><%= cat %></option>
+    <% }); %>
+    </select>
+    <label for="source">Source:</label>
+    <select name="source" id="source">
+    <% sources.forEach(function(src) { %>
+        <option value="<%= src %>" <% if (selected_source === src) { %>selected<% } %>><%= src %></option>
+    <% }); %>
+    </select>
+    <button type="submit">Filter</button>
+</form>
+<ul>
+<% if (news && news.length) { %>
+  <% news.forEach(function(entry) { %>
+    <li>
+        <a href="<%= entry.link %>" target="_blank"><%= entry.title %></a>
+        <small>(<%= entry.published %>)</small>
+    </li>
+  <% }); %>
+<% } else { %>
+    <li>No news available.</li>
+<% } %>
+</ul>
+
