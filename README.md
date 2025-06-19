@@ -7,7 +7,7 @@ This repository contains a simple Python script to display urgent Bitcoin news f
 Install dependencies:
 
 ```bash
-pip install feedparser
+pip install -r requirements.txt
 ```
 
 Run the script:
@@ -15,6 +15,9 @@ Run the script:
 ```bash
 python bitcoin_news.py
 ```
+
+If a feed cannot be retrieved (for example due to network restrictions), the
+script prints a warning and continues.
 
 You can specify custom feeds or limit the number of headlines shown:
 

@@ -17,9 +17,15 @@ def parse_args():
 
 
 def fetch_entries(feed_url):
-    parsed = feedparser.parse(feed_url)
-    entries = parsed.entries
-    return entries
+    """Return list of entries for the given RSS feed URL."""
+    try:
+        parsed = feedparser.parse(feed_url)
+        if parsed.bozo:
+            raise parsed.bozo_exception
+        return parsed.entries
+    except Exception as exc:
+        print(f"Warning: could not retrieve {feed_url}: {exc}")
+        return []
 
 
 def filter_bitcoin_entries(entries):
@@ -45,6 +51,9 @@ def main():
         all_entries.extend(filter_bitcoin_entries(entries))
     # Sort by timestamp descending
     all_entries.sort(key=lambda x: x[0], reverse=True)
+    if not all_entries:
+        print("No entries fetched. Check your network connection or feed URLs.")
+        return
     for timestamp, entry in all_entries[: args.limit]:
         title = entry.get('title')
         link = entry.get('link')
