@@ -1,6 +1,6 @@
 # Codex-2
 
-This repository now contains a small Flask application that displays crypto news from several RSS feeds. The app offers a home page, about page, contact page and a news page where you can filter by crypto category and news source.
+This repository now contains a Flask application that displays crypto news from several RSS feeds. Headlines are stored in a small SQLite database so you can browse an archive of past stories. The interface includes a hacker-style dark theme and a live ticker of the top 10 cryptocurrencies.
 
 ## Usage
 
@@ -16,7 +16,7 @@ Run the web app:
 python app.py
 ```
 
-Then open `http://localhost:5000` in your browser. If a feed cannot be retrieved (for example due to network restrictions), the app prints a warning and continues.
+Then open `http://localhost:5000` in your browser. If a feed cannot be retrieved (for example due to network restrictions), the app prints a warning and continues. News items are saved to `news.db` so they can be browsed later on the **Archive** page.
 
 You can still run the original command-line script to fetch Bitcoin headlines:
 
