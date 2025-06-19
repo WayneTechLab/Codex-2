@@ -1,12 +1,51 @@
 import feedparser
 import argparse
 from datetime import datetime, timezone
+import sqlite3
 
 DEFAULT_FEEDS = [
     'https://news.bitcoin.com/feed/',
     'https://cointelegraph.com/rss',
     'https://www.coindesk.com/arc/outboundfeeds/rss/',
 ]
+
+DB_PATH = 'news.db'
+
+
+def init_db():
+    con = sqlite3.connect(DB_PATH)
+    cur = con.cursor()
+    cur.execute(
+        """CREATE TABLE IF NOT EXISTS news (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT,
+            link TEXT UNIQUE,
+            source TEXT,
+            published TEXT,
+            summary TEXT
+        )"""
+    )
+    con.commit()
+    con.close()
+
+
+def save_entry(entry, source_name):
+    con = sqlite3.connect(DB_PATH)
+    cur = con.cursor()
+    try:
+        cur.execute(
+            "INSERT OR IGNORE INTO news (title, link, source, published, summary) VALUES (?, ?, ?, ?, ?)",
+            (
+                entry.get('title'),
+                entry.get('link'),
+                source_name,
+                entry.get('published'),
+                entry.get('summary', '')
+            ),
+        )
+        con.commit()
+    finally:
+        con.close()
 
 
 def parse_args():
@@ -45,10 +84,14 @@ def filter_bitcoin_entries(entries):
 
 def main():
     args = parse_args()
+    init_db()
     all_entries = []
     for feed_url in args.feeds:
         entries = fetch_entries(feed_url)
-        all_entries.extend(filter_bitcoin_entries(entries))
+        filtered = filter_bitcoin_entries(entries)
+        for ts, entry in filtered:
+            save_entry(entry, feed_url)
+        all_entries.extend(filtered)
     # Sort by timestamp descending
     all_entries.sort(key=lambda x: x[0], reverse=True)
     if not all_entries:

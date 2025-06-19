@@ -16,7 +16,9 @@ Run the web app:
 python app.py
 ```
 
-Then open `http://localhost:5000` in your browser. If a feed cannot be retrieved (for example due to network restrictions), the app prints a warning and continues. News items are saved to `news.db` so they can be browsed later on the **Archive** page.
+Then open `http://localhost:5000` in your browser. If a feed cannot be retrieved (for example due to network restrictions), the app prints a warning and continues.
+
+The first time the app or command line script runs it automatically creates a `news.db` SQLite file in the current directory. All fetched headlines are stored here so you can browse them later on the **Archive** page.
 
 You can still run the original command-line script to fetch Bitcoin headlines:
 
