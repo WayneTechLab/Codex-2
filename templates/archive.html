@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Archive</h1>
+<form method="get" action="{{ url_for('archive') }}" class="filter-form">
+    <label for="year">Year:</label>
+    <select name="year" id="year">
+        <option value="">All</option>
+        {% for y in years %}
+            <option value="{{ y }}" {% if selected_year == y %}selected{% endif %}>{{ y }}</option>
+        {% endfor %}
+    </select>
+    <label for="month">Month:</label>
+    <select name="month" id="month">
+        <option value="">All</option>
+        {% for m in months %}
+            <option value="{{ m }}" {% if selected_month == m %}selected{% endif %}>{{ m }}</option>
+        {% endfor %}
+    </select>
+    <label for="day">Day:</label>
+    <select name="day" id="day">
+        <option value="">All</option>
+        {% for d in days %}
+            <option value="{{ d }}" {% if selected_day == d %}selected{% endif %}>{{ d }}</option>
+        {% endfor %}
+    </select>
+    <label for="ampm">AM/PM:</label>
+    <select name="ampm" id="ampm">
+        <option value="">All</option>
+        <option value="AM" {% if selected_ampm == 'AM' %}selected{% endif %}>AM</option>
+        <option value="PM" {% if selected_ampm == 'PM' %}selected{% endif %}>PM</option>
+    </select>
+    <button type="submit">Filter</button>
+</form>
+<ul class="news-list">
+{% for entry in news %}
+    <li>
+        <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
+        <small>({{ entry.published }}) - {{ entry.source }}</small>
+    </li>
+{% else %}
+    <li>No news available.</li>
+{% endfor %}
+</ul>
+{% endblock %}

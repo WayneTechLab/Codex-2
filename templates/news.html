@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 {% block content %}
 <h1>News</h1>
-<form method="get" action="{{ url_for('news') }}">
+<form method="get" action="{{ url_for('news') }}" class="filter-form">
     <label for="category">Category:</label>
     <select name="category" id="category">
     {% for cat in categories %}
@@ -16,11 +16,11 @@
     </select>
     <button type="submit">Filter</button>
 </form>
-<ul>
+<ul class="news-list">
 {% for entry in news %}
     <li>
         <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
-        <small>({{ entry.published }})</small>
+        <small>({{ entry.published }}) - {{ entry.source }}</small>
     </li>
 {% else %}
     <li>No news available.</li>

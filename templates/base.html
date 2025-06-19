@@ -7,9 +7,15 @@
 </head>
 <body>
 <header>
+    <div class="ticker">
+        {% for item in ticker %}
+            <span class="ticker-item">{{ item['symbol'] }} ${{ item['price'] }}</span>
+        {% endfor %}
+    </div>
     <nav>
         <a href="{{ url_for('home') }}">Home</a> |
         <a href="{{ url_for('news') }}">News</a> |
+        <a href="{{ url_for('archive') }}">Archive</a> |
         <a href="{{ url_for('about') }}">About</a> |
         <a href="{{ url_for('contact') }}">Contact</a>
     </nav>
