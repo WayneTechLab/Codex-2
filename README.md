@@ -25,5 +25,3 @@ You can specify custom feeds or limit the number of headlines shown:
 python bitcoin_news.py --feeds <feed1> <feed2> --limit 5
 ```
 
-
-
