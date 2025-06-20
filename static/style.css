@@ -1,43 +1,72 @@
 body {
-    font-family: 'Courier New', monospace;
-    background: #0d1117;
+    font-family: 'Segoe UI', 'Courier New', monospace;
+    background: linear-gradient(135deg, #0d1117 0%, #23272f 100%);
     color: #e6e6e6;
     margin: 0;
     padding: 0;
+    min-height: 100vh;
 }
 
 header {
-    background: #161b22;
+    background: linear-gradient(90deg, #161b22 60%, #23272f 100%);
     color: #f1c40f;
-    padding: 10px 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    padding: 10px 20px 0 20px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.5);
+    border-bottom: 1px solid #222;
+}
+
+nav {
+    margin-top: 10px;
+    margin-bottom: 0;
 }
 
 nav a {
     color: #f1c40f;
-    margin-right: 15px;
+    margin-right: 18px;
     text-decoration: none;
-    font-weight: bold;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+    transition: color 0.2s;
+}
+
+nav a:hover {
+    color: #fff;
+    text-shadow: 0 0 8px #f1c40f88;
 }
 
 main {
-    padding: 20px;
+    padding: 30px 10vw 40px 10vw;
+    min-height: 70vh;
 }
 
 .ticker {
     white-space: nowrap;
     overflow: hidden;
     box-sizing: border-box;
-    background: #0b0e13;
+    background: linear-gradient(90deg, #0b0e13 80%, #23272f 100%);
     color: #0f0;
-    padding: 8px 0;
-    font-size: 0.9rem;
+    padding: 10px 0 10px 0;
+    font-size: 1rem;
+    border-radius: 8px 8px 0 0;
+    position: relative;
 }
 
 .ticker-item {
     display: inline-block;
     padding: 0 50px;
     animation: ticker 30s linear infinite;
+    font-family: 'Fira Mono', 'Courier New', monospace;
+    font-size: 1.05rem;
+    text-shadow: 0 0 4px #0f04;
+}
+
+.ticker-countdown {
+    color: #f1c40f;
+    font-weight: bold;
+    margin-left: 30px;
+    font-size: 0.95em;
+    letter-spacing: 1px;
+    text-shadow: 0 0 6px #222;
 }
 
 @keyframes ticker {
@@ -48,34 +77,116 @@ main {
 ul.news-list {
     list-style: none;
     padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 28px;
+    justify-content: flex-start;
 }
 
 ul.news-list li {
-    margin-bottom: 15px;
-    border-bottom: 1px solid #333;
-    padding-bottom: 10px;
+    background: linear-gradient(135deg, #181c23 60%, #23272f 100%);
+    border-radius: 18px;
+    box-shadow: 0 4px 24px 0 #000a, 0 1.5px 6px 0 #2228;
+    margin-bottom: 0;
+    padding: 22px 24px 16px 24px;
+    min-width: 270px;
+    max-width: 370px;
+    flex: 1 1 320px;
+    transition: transform 0.18s, box-shadow 0.18s;
+    border: 1.5px solid #23272f;
+    position: relative;
+}
+
+ul.news-list li:hover {
+    transform: translateY(-6px) scale(1.025);
+    box-shadow: 0 8px 32px 0 #000c, 0 2px 12px 0 #f1c40f33;
+    border-color: #f1c40f55;
 }
 
 ul.news-list li a {
     color: #58a6ff;
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: 1.13rem;
+    font-weight: 600;
+    transition: color 0.18s;
+}
+
+ul.news-list li a:hover {
+    color: #f1c40f;
+    text-shadow: 0 0 8px #f1c40f55;
 }
 
 ul.news-list li small {
-    color: #999;
+    color: #bbb;
     margin-left: 5px;
+    font-size: 0.98em;
+    display: block;
+    margin-top: 8px;
+    letter-spacing: 0.2px;
 }
 
 form.filter-form {
-    margin-bottom: 20px;
+    margin-bottom: 28px;
+    background: #181c23;
+    padding: 14px 18px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px #0004;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 18px;
+    align-items: center;
+}
+
+form.filter-form label {
+    font-weight: 500;
+    color: #f1c40f;
+    margin-right: 4px;
 }
 
 form.filter-form select,
 form.filter-form button {
-    padding: 5px;
+    padding: 7px 12px;
     margin-right: 10px;
-    background: #161b22;
+    background: #23272f;
     color: #e6e6e6;
-    border: 1px solid #333;
+    border: 1.5px solid #333;
+    border-radius: 6px;
+    font-size: 1em;
+    transition: border 0.18s, box-shadow 0.18s;
+}
+
+form.filter-form select:focus,
+form.filter-form button:focus {
+    border-color: #f1c40f;
+    outline: none;
+    box-shadow: 0 0 8px #f1c40f55;
+}
+
+form.filter-form button {
+    background: linear-gradient(90deg, #f1c40f 60%, #e67e22 100%);
+    color: #23272f;
+    font-weight: bold;
+    border: none;
+    cursor: pointer;
+    box-shadow: 0 2px 8px #f1c40f22;
+    transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+
+form.filter-form button:hover {
+    background: linear-gradient(90deg, #e67e22 60%, #f1c40f 100%);
+    color: #fff;
+    box-shadow: 0 4px 16px #f1c40f44;
+}
+
+.bookmark {
+    font-size: 1.3em;
+    color: #f1c40f;
+    cursor: pointer;
+    margin-right: 10px;
+    vertical-align: middle;
+    transition: color 0.2s;
+}
+.bookmark:hover {
+    color: #fff;
 }

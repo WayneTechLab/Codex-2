@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Your Profile</h1>
+<div id="profile-info">
+    <p><strong>Name:</strong> <span id="profile-name"></span></p>
+    <p><strong>Email:</strong> <span id="profile-email"></span></p>
+    <button id="logout-btn">Logout</button>
+</div>
+<div id="login-section" style="display:none;">
+    <button id="login-btn">Login with Google</button>
+</div>
+<h2>Your Bookmarked News</h2>
+<ul id="favorites-list" class="news-list"></ul>
+<script type="module" src="{{ url_for('static', filename='firebase-auth.js') }}"></script>
+{% endblock %}

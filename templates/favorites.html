@@ -1,0 +1,6 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>Your Favorites</h1>
+<ul id="favorites-list" class="news-list"></ul>
+<script type="module" src="{{ url_for('static', filename='firebase-auth.js') }}"></script>
+{% endblock %}

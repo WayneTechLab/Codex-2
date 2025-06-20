@@ -6,22 +6,134 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+<div id="welcome-overlay" style="display:none; position:fixed; z-index:9999; top:0; left:0; width:100vw; height:100vh; background:rgba(20,20,30,0.97); color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center;">
+    <h1>Welcome to Crypto News App</h1>
+    <p>Please log in with Google to continue.</p>
+    <button id="welcome-login-btn" style="padding:12px 24px; font-size:1.1em; background:#f1c40f; color:#23272f; border:none; border-radius:8px; cursor:pointer;">Login with Google</button>
+</div>
 <header>
     <div class="ticker">
         {% for item in ticker %}
             <span class="ticker-item">{{ item['symbol'] }} ${{ item['price'] }}</span>
         {% endfor %}
+        <span class="ticker-countdown" id="ticker-countdown"></span>
     </div>
-    <nav>
-        <a href="{{ url_for('home') }}">Home</a> |
-        <a href="{{ url_for('news') }}">News</a> |
-        <a href="{{ url_for('archive') }}">Archive</a> |
-        <a href="{{ url_for('about') }}">About</a> |
+    <button id="hamburger-btn" aria-label="Open menu">&#9776;</button>
+    <nav id="main-nav" class="nav-closed">
+        <a href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('news') }}">News</a>
+        <a href="{{ url_for('archive') }}">Archive</a>
+        <a href="{{ url_for('about') }}">About</a>
         <a href="{{ url_for('contact') }}">Contact</a>
+        <a href="{{ url_for('profile') }}">Profile</a>
+        <a href="{{ url_for('favorites') }}">Favorites</a>
     </nav>
 </header>
 <main>
     {% block content %}{% endblock %}
 </main>
+<script type="module" src="{{ url_for('static', filename='firebase-auth.js') }}"></script>
+<script>
+function updateCountdown() {
+    const now = new Date();
+    const utc = new Date(now.getTime() + now.getTimezoneOffset() * 60000);
+    const minutes = utc.getUTCMinutes();
+    const seconds = utc.getUTCSeconds();
+    const next5 = 5 - (minutes % 5) - (seconds === 0 ? 0 : 1);
+    const secLeft = (60 - seconds) % 60;
+    let minLeft = next5;
+    if (secLeft === 59) minLeft -= 1;
+    document.getElementById('ticker-countdown').textContent =
+        `Next update in ${minLeft}:${secLeft.toString().padStart(2, '0')} UTC`;
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+document.addEventListener('DOMContentLoaded', function() {
+    const btn = document.getElementById('hamburger-btn');
+    const nav = document.getElementById('main-nav');
+    if (btn && nav) {
+        btn.onclick = function() {
+            nav.classList.toggle('nav-open');
+            nav.classList.toggle('nav-closed');
+        };
+        // Optional: close menu when clicking a link (mobile UX)
+        nav.querySelectorAll('a').forEach(link => {
+            link.onclick = () => {
+                nav.classList.remove('nav-open');
+                nav.classList.add('nav-closed');
+            };
+        });
+    }
+});
+</script>
+<style>
+/* Hamburger menu styles */
+#hamburger-btn {
+    position: absolute;
+    top: 18px;
+    right: 24px;
+    background: none;
+    border: none;
+    font-size: 2em;
+    color: #f1c40f;
+    cursor: pointer;
+    z-index: 1001;
+    display: block;
+}
+
+#main-nav {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 220px;
+    height: 100vh;
+    background: #23272f;
+    box-shadow: -2px 0 12px #0008;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 60px 20px 20px 20px;
+    gap: 18px;
+    transform: translateX(100%);
+    transition: transform 0.3s cubic-bezier(.4,2,.6,1);
+    z-index: 1000;
+}
+
+#main-nav a {
+    color: #f1c40f;
+    text-decoration: none;
+    font-size: 1.1em;
+    padding: 8px 0;
+    width: 100%;
+}
+
+#main-nav a:hover {
+    color: #fff;
+}
+
+#main-nav.nav-open {
+    transform: translateX(0);
+}
+
+#main-nav.nav-closed {
+    transform: translateX(100%);
+}
+
+@media (min-width: 700px) {
+    #hamburger-btn {
+        display: none;
+    }
+    #main-nav {
+        position: static;
+        transform: none !important;
+        flex-direction: row;
+        height: auto;
+        background: none;
+        box-shadow: none;
+        padding: 0;
+        gap: 24px;
+    }
+}
+</style>
 </body>
 </html>

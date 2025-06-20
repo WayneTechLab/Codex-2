@@ -4,6 +4,7 @@
 <ul class="news-list">
 {% for entry in news %}
     <li>
+        <span class="bookmark" title="Bookmark">&#9734;</span>
         <a href="{{ entry.link }}" target="_blank">{{ entry.title }}</a>
         <small>({{ entry.published }}) - {{ entry.source }}</small>
     </li>

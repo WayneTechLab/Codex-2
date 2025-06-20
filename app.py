@@ -232,6 +232,23 @@ def archive():
     )
 
 
-if __name__ == '__main__':
-    init_db()
-    app.run(debug=True, host='0.0.0.0')
+@app.route('/profile')
+def profile():
+    return render_template('profile.html', ticker=get_ticker_data())
+
+
+def get_ticker_data():
+    # Example static data; replace with your real ticker logic if needed
+    return [
+        {"symbol": "BTC", "price": "65000"},
+        {"symbol": "ETH", "price": "3500"}
+    ]
+
+
+@app.route('/favorites')
+def favorites():
+    return render_template('favorites.html')
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=80, debug=True)
